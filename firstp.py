@@ -4,7 +4,6 @@ class ListDict:
 		self.lst=list()
 		self.dict=dict()
 		pass
-	
 	def addElementToList(self,a):
 		
 		self.lst.append(a)
