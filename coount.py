@@ -1,3 +1,4 @@
+
 str1=input()
 opstr=""
 dup=[]
