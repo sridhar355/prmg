@@ -1,6 +1,6 @@
 #list comprehension
 #example1
-#print square of numbers
+# square of numbers
 b=[i*i for i in range(1,11)]
 print(b)
 
