@@ -1,7 +1,7 @@
 
 #dictionarycomprehension
 
-#ex1
+# ex1
 #square of number
 res={i:i*i for i in range(1,11)}
 print(res)
