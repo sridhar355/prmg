@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'building....'
+                sh 'echo "building.." > ArtFile.txt'
             }
         }
         stage('Test') {
@@ -22,7 +22,7 @@ pipeline {
     {
         always
         {
-            echo 'done!'
+            archiveArtifacts artifacts: 'ArtFile.txt', onlyIfSuccessful: true
         }
     }
 }
