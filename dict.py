@@ -1,5 +1,5 @@
 
-#dictionary comprehension
+# dictionary comprehension
 
 # ex1
 #square of number
