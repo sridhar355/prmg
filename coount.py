@@ -1,5 +1,5 @@
 
-str1 = input()
+str1 =input()
 opstr=""
 dup=[]
 strlst=(list(str1))
