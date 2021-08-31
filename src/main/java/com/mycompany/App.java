@@ -1,4 +1,4 @@
-package com.calsoft;
+package com.mycompany;
 
 public class App
 {
