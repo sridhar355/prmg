@@ -1,12 +1,14 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'python' }
+    }
 
     stages {
-        stage('log version info') {
+        stage('build_docker') {
             steps {
-                git 'https://github.com/sridhar355/prmg.git'
-                sh 'mvn --version'
-                sh 'mvn clean install'
+              sh """
+                docker build -t dict .
+              """
             }
         }
         stage('Build') {
