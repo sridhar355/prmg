@@ -1,4 +1,4 @@
-# dictionary comprehension
+#dictionary comprehension
 
 #square of number
 res={i:i*i for i in range(1,11)}
