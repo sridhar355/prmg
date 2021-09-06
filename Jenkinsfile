@@ -11,6 +11,13 @@ pipeline {
               """
             }
         }
+        stage('run') {
+            steps {
+                sh """
+                  docker run --rm dict
+                """
+            }
+        }
         stage('Build') {
             steps {
                 sh 'echo "building.." > ArtFile.txt'
