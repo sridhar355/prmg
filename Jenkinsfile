@@ -1,13 +1,8 @@
 pipeline {
-    agent any
+    agent { docker: 'python:3' }
 
     stages {
         stage('build_docker') {
-            agent{
-                docker {
-                    image: 'python:3'
-                }
-            }
             steps {
               sh """
                 docker build -t dict .
