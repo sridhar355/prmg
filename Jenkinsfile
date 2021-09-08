@@ -4,7 +4,7 @@ pipeline {
     }
     agent {
         dockerfile {
-            label "docker"
+            image 'maven:3.8.1-adoptopenjdk-11'
             args "-v /tmp/maven:/home/jenkins/.m2 -e MAVEN_CONFIG=/home/jenkins/.m2"
         }
     }
