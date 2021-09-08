@@ -1,47 +1,27 @@
 pipeline {
-    agent any
+    environment {
+        JAVA_TOOL_OPTIONS = "-Duser.home=/home/jenkins"
+    }
+    agent {
+        dockerfile {
+            label "docker"
+            args "-v /tmp/maven:/home/jenkins/.m2 -e MAVEN_CONFIG=/home/jenkins/.m2"
+        }
+    }
 
     stages {
-        stage('build_docker') {
-            agent {
-                docker {
-                    image 'python:3'
-                } 
-            }
+        stage("Build") {
             steps {
-              sh """
-                docker build -t dict .
-              """
-            }
-        }
-        stage('run') {
-            steps {
-                sh """
-                  docker run --rm dict
-                """
-            }
-        }
-        stage('Build') {
-            steps {
-                sh 'echo "building.." > ArtFile.txt'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying...'
+                sh "ssh -V"
+                sh "mvn -version"
+                sh "mvn clean install"
             }
         }
     }
-    post
-    {
-        always
-        {
-            archiveArtifacts artifacts: 'ArtFile.txt', onlyIfSuccessful: true
+
+    post {
+        always {
+            cleanWs()
         }
     }
 }
