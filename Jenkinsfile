@@ -17,21 +17,18 @@ pipeline {
             steps {
                 sh 'cd /demo'
                 echo 'pwd'
-                echo 'ls'
                 sh 'python sample.py'
                 archiveArtifacts artifacts: '*.py'
             }
         }
         stage('building image') {
             steps {
-                echo "Creating image to run the py file"
-                sh 'docker build -t runpy .'
+                sh 'docker build -t sample .'
             }
         }
         stage('run docker') {
             steps {
-                echo "Running the container to see output of py file"
-                sh 'docker run runpy'
+                sh 'docker run sample'
             }
         }
     }
