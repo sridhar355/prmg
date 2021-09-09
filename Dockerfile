@@ -1,7 +1,7 @@
 FROM python:3.7-alpine
 
-COPY *.py /temp/sample.py
+COPY *.py /tmp/sample.py
 
-WORKDIR /temp
+WORKDIR /tmp
 
 CMD [ "python", "sample.py"]
