@@ -3,14 +3,14 @@ pipeline {
     stages {
         stage('python docker image') {
             steps {
-                sh 'docker pull python:3.7-alpine'
+                sh 'docker pull python:3'
             }
         }
         stage('build') {
             
             agent{
                   docker {
-                        image 'python:3.7-alpine'
+                        image 'python:3'
                         args '-v $WORKSPACE:/demo -u root'
                     }
                 }
