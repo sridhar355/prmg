@@ -1,6 +1,6 @@
 FROM python:3.7-alpine
 
-COPY *.py /tmp/
+COPY sample.py /tmp/
 
 WORKDIR /tmp
 
