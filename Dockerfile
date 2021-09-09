@@ -1,5 +1,7 @@
-FROM python:3
+FROM python:3.7-alpine
 
-ADD dict.py /
+COPY *.py /temp/sample.py
 
-CMD [ "python", "./dict.py" ]
+WORKDIR /temp
+
+CMD [ "python", "sample.py"]
