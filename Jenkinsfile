@@ -17,7 +17,7 @@ pipeline {
             steps {
                 sh 'cd /temp'
                 echo 'pwd'
-                sh 'python sample.py'
+                sh 'python3 sample.py'
                 archiveArtifacts artifacts: 'sample.py'
             }
         }
