@@ -11,11 +11,11 @@ pipeline {
             agent{
                   docker {
                         image 'python:3'
-                        args '-v $WORKSPACE:/demo -u root'
+                        args '-v $WORKSPACE:/temp -u root'
                     }
                 }
             steps {
-                sh 'cd /demo'
+                sh 'cd /temp'
                 echo 'pwd'
                 sh 'python sample.py'
                 archiveArtifacts artifacts: '*.py'
