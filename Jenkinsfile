@@ -18,7 +18,7 @@ pipeline {
                 sh 'cd /demo'
                 echo 'pwd'
                 echo 'ls'
-                sh 'python hello.py'
+                sh 'python sample.py'
                 archiveArtifacts artifacts: '*.py'
             }
         }
