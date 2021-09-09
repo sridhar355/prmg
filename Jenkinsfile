@@ -1,47 +1,42 @@
 pipeline {
     agent any
-
+    
     stages {
-        stage('build_docker') {
-            agent {
-                docker {
-                    image 'python:3'
-                } 
-            }
+        stage('docker pull') {
             steps {
-              sh """
-                docker build -t dict .
-              """
+                sh 'docker pull maven:3.8.2-openjdk-11'
+                sh 'docker pull openjdk:8-jdk-slim'
             }
         }
-        stage('run') {
+        stage('build') {
+            
+            agent{
+                  docker {
+                        image 'maven:3.8.2-openjdk-11'
+                        args '-v $WORKSPACE:/shared-volume -u root'
+                    }
+                }
             steps {
-                sh """
-                  docker run --rm dict
-                """
+                sh 'cd /shared-volume'
+                sh 'mvn clean install'
+                echo 'Creating Artifacts..'
+                archiveArtifacts artifacts: 'target/*.jar'
             }
         }
-        stage('Build') {
+        stage('building docker') {
             steps {
-                sh 'echo "building.." > ArtFile.txt'
+                sh 'docker build -t jar-executor .'
             }
         }
-        stage('Test') {
+        stage('running docker') {
             steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying...'
+                sh 'docker run jar-executor'
             }
         }
     }
-    post
-    {
-        always
-        {
-            archiveArtifacts artifacts: 'ArtFile.txt', onlyIfSuccessful: true
-        }
+    post {
+        always{
+            cleanWs()
+         }
     }
 }
