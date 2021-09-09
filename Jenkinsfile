@@ -1,47 +1,43 @@
 pipeline {
     agent any
-
     stages {
-        stage('build_docker') {
-            agent {
-                docker {
-                    image 'python:3'
-                } 
-            }
+        stage('python docker image') {
             steps {
-              sh """
-                docker build -t dict .
-              """
+                sh 'docker pull python:3.7-alpine'
             }
         }
-        stage('run') {
+        stage('build') {
+            
+            agent{
+                  docker {
+                        image 'python:3.7-alpine'
+                        args '-v $WORKSPACE:/demo -u root'
+                    }
+                }
             steps {
-                sh """
-                  docker run --rm dict
-                """
+                sh 'cd /demo'
+                echo 'pwd'
+                echo 'ls'
+                sh 'python hello.py'
+                archiveArtifacts artifacts: '*.py'
             }
         }
-        stage('Build') {
+        stage('building image') {
             steps {
-                sh 'echo "building.." > ArtFile.txt'
+                echo "Creating image to run the py file"
+                sh 'docker build -t runpy .'
             }
         }
-        stage('Test') {
+        stage('run docker') {
             steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying...'
+                echo "Running the container to see output of py file"
+                sh 'docker run runpy'
             }
         }
     }
-    post
-    {
-        always
-        {
-            archiveArtifacts artifacts: 'ArtFile.txt', onlyIfSuccessful: true
-        }
+    post {
+    always {
+        cleanWs()
+    }
     }
 }
