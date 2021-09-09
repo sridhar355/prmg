@@ -18,7 +18,7 @@ pipeline {
                 sh 'cd /temp'
                 echo 'pwd'
                 sh 'python sample.py'
-                archiveArtifacts artifacts: '*.py'
+                archiveArtifacts artifacts: 'sample.py'
             }
         }
         stage('building image') {
