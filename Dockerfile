@@ -1,5 +1,7 @@
-FROM python:3
+FROM openjdk:8-jdk-slim
 
-ADD dict.py /
+COPY target/*.jar /temp/app.jar
 
-CMD [ "python", "./dict.py" ]
+WORKDIR /temp
+
+CMD ["java", "-jar", "app.jar"]
